@@ -1,0 +1,254 @@
+Microsoft Windows [Version 10.0.22631.5549]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\KIIT\Desktop>sqlplus
+
+SQL*Plus: Release 11.2.0.2.0 Production on Sat Jun 28 19:22:34 2025
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: Arpita3848
+Enter password:
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> CREATE TABLE Products (
+  2      ProductID INT PRIMARY KEY,
+  3      ProductName VARCHAR(100),
+  4      Category VARCHAR(50),
+  5      Price DECIMAL(10, 2)
+  6  );
+
+Table created.
+
+
+SQL> INSERT INTO Products (ProductID, ProductName, Category, Price) VALUES (1, 'Laptop', 'Electronics', 1500.00);
+
+1 row created.
+
+SQL> INSERT INTO Products (ProductID, ProductName, Category, Price) VALUES (2, 'Smartphone', 'Electronics', 1200.00);
+
+1 row created.
+
+SQL> INSERT INTO Products (ProductID, ProductName, Category, Price) VALUES (3, 'Tablet', 'Electronics', 1200.00);
+
+1 row created.
+
+SQL> INSERT INTO Products (ProductID, ProductName, Category, Price) VALUES (4, 'Monitor', 'Electronics', 300.00);
+
+1 row created.
+
+SQL> INSERT INTO Products (ProductID, ProductName, Category, Price) VALUES (5, 'Desk', 'Furniture', 350.00);
+
+1 row created.
+
+SQL> INSERT INTO Products (ProductID, ProductName, Category, Price) VALUES (6, 'Chair', 'Furniture', 150.00);
+
+1 row created.
+
+SQL> INSERT INTO Products (ProductID, ProductName, Category, Price) VALUES (7, 'Couch', 'Furniture', 1200.00);
+
+1 row created.
+
+SQL> INSERT INTO Products (ProductID, ProductName, Category, Price) VALUES (8, 'Bookshelf', 'Furniture', 450.00);
+
+1 row created.
+
+SQL> INSERT INTO Products (ProductID, ProductName, Category, Price) VALUES (9, 'Pasta', 'Groceries', 15.00);
+
+1 row created.
+
+SQL> INSERT INTO Products (ProductID, ProductName, Category, Price) VALUES (10, 'Olive Oil', 'Groceries', 25.00);
+
+1 row created.
+
+SQL> INSERT INTO Products (ProductID, ProductName, Category, Price) VALUES (11, 'Cheese', 'Groceries', 25.00);
+
+1 row created.
+
+SQL> INSERT INTO Products (ProductID, ProductName, Category, Price) VALUES (12, 'Wine', 'Groceries', 55.00);
+
+1 row created.
+
+SQL> SELECT
+  2      ProductID,
+  3      ProductName,
+  4      Category,
+  5      Price,
+  6      ROW_NUMBER() OVER (PARTITION BY Category ORDER BY Price DESC) AS rn,
+  7      RANK() OVER (PARTITION BY Category ORDER BY Price DESC) AS rnk,
+  8      DENSE_RANK() OVER (PARTITION BY Category ORDER BY Price DESC) AS drnk
+  9  FROM Products;
+
+ PRODUCTID
+----------
+PRODUCTNAME
+--------------------------------------------------------------------------------
+CATEGORY                                                PRICE         RN
+-------------------------------------------------- ---------- ----------
+       RNK       DRNK
+---------- ----------
+         1
+Laptop
+Electronics                                              1500          1
+         1          1
+
+
+ PRODUCTID
+----------
+PRODUCTNAME
+--------------------------------------------------------------------------------
+CATEGORY                                                PRICE         RN
+-------------------------------------------------- ---------- ----------
+       RNK       DRNK
+---------- ----------
+         2
+Smartphone
+Electronics                                              1200          2
+         2          2
+
+
+ PRODUCTID
+----------
+PRODUCTNAME
+--------------------------------------------------------------------------------
+CATEGORY                                                PRICE         RN
+-------------------------------------------------- ---------- ----------
+       RNK       DRNK
+---------- ----------
+         3
+Tablet
+Electronics                                              1200          3
+         2          2
+
+
+ PRODUCTID
+----------
+PRODUCTNAME
+--------------------------------------------------------------------------------
+CATEGORY                                                PRICE         RN
+-------------------------------------------------- ---------- ----------
+       RNK       DRNK
+---------- ----------
+         4
+Monitor
+Electronics                                               300          4
+         4          3
+
+
+ PRODUCTID
+----------
+PRODUCTNAME
+--------------------------------------------------------------------------------
+CATEGORY                                                PRICE         RN
+-------------------------------------------------- ---------- ----------
+       RNK       DRNK
+---------- ----------
+         7
+Couch
+Furniture                                                1200          1
+         1          1
+
+
+ PRODUCTID
+----------
+PRODUCTNAME
+--------------------------------------------------------------------------------
+CATEGORY                                                PRICE         RN
+-------------------------------------------------- ---------- ----------
+       RNK       DRNK
+---------- ----------
+         8
+Bookshelf
+Furniture                                                 450          2
+         2          2
+
+
+ PRODUCTID
+----------
+PRODUCTNAME
+--------------------------------------------------------------------------------
+CATEGORY                                                PRICE         RN
+-------------------------------------------------- ---------- ----------
+       RNK       DRNK
+---------- ----------
+         5
+Desk
+Furniture                                                 350          3
+         3          3
+
+
+ PRODUCTID
+----------
+PRODUCTNAME
+--------------------------------------------------------------------------------
+CATEGORY                                                PRICE         RN
+-------------------------------------------------- ---------- ----------
+       RNK       DRNK
+---------- ----------
+         6
+Chair
+Furniture                                                 150          4
+         4          4
+
+
+ PRODUCTID
+----------
+PRODUCTNAME
+--------------------------------------------------------------------------------
+CATEGORY                                                PRICE         RN
+-------------------------------------------------- ---------- ----------
+       RNK       DRNK
+---------- ----------
+        12
+Wine
+Groceries                                                  55          1
+         1          1
+
+
+ PRODUCTID
+----------
+PRODUCTNAME
+--------------------------------------------------------------------------------
+CATEGORY                                                PRICE         RN
+-------------------------------------------------- ---------- ----------
+       RNK       DRNK
+---------- ----------
+        10
+Olive Oil
+Groceries                                                  25          2
+         2          2
+
+
+ PRODUCTID
+----------
+PRODUCTNAME
+--------------------------------------------------------------------------------
+CATEGORY                                                PRICE         RN
+-------------------------------------------------- ---------- ----------
+       RNK       DRNK
+---------- ----------
+        11
+Cheese
+Groceries                                                  25          3
+         2          2
+
+
+ PRODUCTID
+----------
+PRODUCTNAME
+--------------------------------------------------------------------------------
+CATEGORY                                                PRICE         RN
+-------------------------------------------------- ---------- ----------
+       RNK       DRNK
+---------- ----------
+         9
+Pasta
+Groceries                                                  15          4
+         4          3
+
+
+12 rows selected.
+
+SQL>
