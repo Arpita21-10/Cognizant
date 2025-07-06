@@ -1,0 +1,133 @@
+Microsoft Windows [Version 10.0.22631.5549]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\KIIT\Desktop>sqlplu
+'sqlplu' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\KIIT\Desktop>sqlplus
+
+SQL*Plus: Release 11.2.0.2.0 Production on Sat Jun 28 19:29:47 2025
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: Arpita3848
+Enter password:
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> CREATE TABLE Departments (
+  2      DepartmentID INT PRIMARY KEY,
+  3      DepartmentName VARCHAR(100)
+  4  );
+
+Table created.
+
+SQL> CREATE TABLE Employees (
+  2      EmployeeID INT PRIMARY KEY,
+  3      FirstName VARCHAR(50),
+  4      LastName VARCHAR(50),
+  5      DepartmentID INT,
+  6      Salary DECIMAL(10,2),
+  7      JoinDate DATE,
+  8      CONSTRAINT fk_dept FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
+  9  );
+
+Table created.
+
+SQL> INSERT INTO Departments (DepartmentID, DepartmentName) VALUES (1, 'HR');
+
+1 row created.
+
+SQL> INSERT INTO Departments (DepartmentID, DepartmentName) VALUES (2, 'Finance');
+
+1 row created.
+
+SQL> INSERT INTO Departments (DepartmentID, DepartmentName) VALUES (3, 'IT');
+
+1 row created.
+
+SQL> INSERT INTO Departments (DepartmentID, DepartmentName) VALUES (4, 'Marketing');
+
+1 row created.
+
+SQL> INSERT INTO Employees (EmployeeID, FirstName, LastName, DepartmentID, Salary, JoinDate)
+  2  VALUES (1, 'John', 'Doe', 1, 5000.00, TO_DATE('2020-01-15', 'YYYY-MM-DD'));
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO Employees (EmployeeID, FirstName, LastName, DepartmentID, Salary, JoinDate)
+  2  VALUES (2, 'Jane', 'Smith', 2, 6000.00, TO_DATE('2019-03-22', 'YYYY-MM-DD'));
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO Employees (EmployeeID, FirstName, LastName, DepartmentID, Salary, JoinDate)
+  2  VALUES (3, 'Michael', 'Johnson', 3, 7000.00, TO_DATE('2018-07-30', 'YYYY-MM-DD'));
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO Employees (EmployeeID, FirstName, LastName, DepartmentID, Salary, JoinDate)
+  2  VALUES (4, 'Emily', 'Davis', 4, 5500.00, TO_DATE('2021-11-05', 'YYYY-MM-DD'));
+
+1 row created.
+
+SQL> CREATE OR REPLACE PROCEDURE sp_GetEmployeesByDepartment (
+  2      dept_id IN INT
+  3  )
+  4  AS
+  5  BEGIN
+  6      FOR emp_rec IN (
+  7          SELECT EmployeeID, FirstName, LastName, Salary, JoinDate
+  8          FROM Employees
+  9          WHERE DepartmentID = dept_id
+ 10      ) LOOP
+ 11          DBMS_OUTPUT.PUT_LINE(
+ 12              'ID: ' || emp_rec.EmployeeID || ', Name: ' || emp_rec.FirstName || ' ' || emp_rec.LastName ||
+ 13              ', Salary: ' || emp_rec.Salary || ', Joined: ' || emp_rec.JoinDate
+ 14          );
+ 15      END LOOP;
+ 16  END;
+ 17  /
+
+Procedure created.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> EXEC sp_GetEmployeesByDepartment(3);
+ID: 3, Name: Michael Johnson, Salary: 7000, Joined: 30-JUL-18
+
+PL/SQL procedure successfully completed.
+
+SQL> CREATE OR REPLACE PROCEDURE sp_InsertEmployee (
+  2      p_FirstName   IN VARCHAR2,
+  3      p_LastName    IN VARCHAR2,
+  4      p_DepartmentID IN INT,
+  5      p_Salary      IN DECIMAL,
+  6      p_JoinDate    IN DATE
+  7  )
+  8  AS
+  9      new_id INT;
+ 10  BEGIN
+ 11      SELECT NVL(MAX(EmployeeID), 0) + 1 INTO new_id FROM Employees;
+ 12
+ 13      INSERT INTO Employees (EmployeeID, FirstName, LastName, DepartmentID, Salary, JoinDate)
+ 14      VALUES (new_id, p_FirstName, p_LastName, p_DepartmentID, p_Salary, p_JoinDate);
+ 15
+ 16      COMMIT;
+ 17  END;
+ 18  /
+
+Procedure created.
+
+SQL> BEGIN
+  2      sp_InsertEmployee('Alice', 'Walker', 2, 5800.00, TO_DATE('2022-05-12', 'YYYY-MM-DD'));
+  3  END;
+  4
+  5  /
+
+PL/SQL procedure successfully completed.
+
+SQL>

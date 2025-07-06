@@ -1,0 +1,78 @@
+Microsoft Windows [Version 10.0.22631.5549]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\KIIT\Desktop>sqlplu
+'sqlplu' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\KIIT\Desktop>sqlplus
+
+SQL*Plus: Release 11.2.0.2.0 Production on Sat Jun 28 19:29:47 2025
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: Arpita3848
+Enter password:
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+
+SQL> CREATE OR REPLACE PROCEDURE sp_InsertEmployee (
+  2      p_FirstName   IN VARCHAR2,
+  3      p_LastName    IN VARCHAR2,
+  4      p_DepartmentID IN INT,
+  5      p_Salary      IN DECIMAL,
+  6      p_JoinDate    IN DATE
+  7  )
+  8  AS
+  9      new_id INT;
+ 10  BEGIN
+ 11      SELECT NVL(MAX(EmployeeID), 0) + 1 INTO new_id FROM Employees;
+ 12
+ 13      INSERT INTO Employees (EmployeeID, FirstName, LastName, DepartmentID, Salary, JoinDate)
+ 14      VALUES (new_id, p_FirstName, p_LastName, p_DepartmentID, p_Salary, p_JoinDate);
+ 15
+ 16      COMMIT;
+ 17  END;
+ 18  /
+
+Procedure created.
+
+SQL> BEGIN
+  2      sp_InsertEmployee('Alice', 'Walker', 2, 5800.00, TO_DATE('2022-05-12', 'YYYY-MM-DD'));
+  3  END;
+  4
+  5  /
+
+PL/SQL procedure successfully completed.
+
+SQL> CREATE OR REPLACE PROCEDURE sp_GetEmployeeCountByDept (
+  2      p_DepartmentID IN INT,
+  3      p_EmpCount     OUT INT
+  4  )
+  5  AS
+  6  BEGIN
+  7      SELECT COUNT(*)
+  8      INTO p_EmpCount
+  9      FROM Employees
+ 10      WHERE DepartmentID = p_DepartmentID;
+ 11  END;
+ 12  /
+
+Procedure created.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> DECLARE
+  2      emp_count INT;
+  3  BEGIN
+  4      sp_GetEmployeeCountByDept(3, emp_count);
+  5      DBMS_OUTPUT.PUT_LINE('Total employees in department 3: ' || emp_count);
+  6  END;
+  7  /
+Total employees in department 3: 1
+
+PL/SQL procedure successfully completed.
+
+SQL> Total employees in department 3: 1
+
