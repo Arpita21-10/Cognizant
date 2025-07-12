@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "WnhbSMG0cT0=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\KIIT\\Documents\\Cognizant\\week4\\MyFirstApi\\Cognizant\\week4\\MyFirstApi\\MyFirstApi.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\KIIT\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.6\\microsoft.aspnetcore.openapi.9.0.6.nupkg.sha512",
+    "C:\\Users\\KIIT\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
