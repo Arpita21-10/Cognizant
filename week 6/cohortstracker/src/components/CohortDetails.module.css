@@ -1,0 +1,14 @@
+.box {
+    width: 300px; /* [cite: 146] */
+    display: inline-block; /* [cite: 147] */
+    margin: 10px; /* [cite: 148] */
+    padding: 10px 20px; /* [cite: 149, 150] */
+    border: 1px solid black; /* [cite: 151] */
+    border-radius: 10px; /* [cite: 152] */
+    font-family: sans-serif;
+    vertical-align: top;
+}
+
+dt {
+    font-weight: 500; /* [cite: 153] */
+}
